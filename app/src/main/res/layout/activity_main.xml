@@ -12,13 +12,32 @@
         android:layout_height="wrap_content"
         android:text="Liste des velibs disponible"
         android:textSize="25dp"
+        android:layout_marginBottom="30dp"
         android:layout_centerHorizontal="true"
+        />
+    <ImageButton
+        android:layout_marginTop="13dp"
+        android:layout_marginRight="10dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignRight="@+id/listOfBike"
+        android:src="@drawable/refresh"
+        />
+    <TextView
+        android:id="@+id/lastDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/labelBike"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="5dp"
+        android:textSize="10dp"
+        android:text="Dernière MàJ:"
         />
     <ListView
         android:id="@+id/listOfBike"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/labelBike"
+        android:layout_below="@+id/lastDate"
         />
 
 </RelativeLayout>
