@@ -10,7 +10,7 @@
         android:id="@+id/labelBike"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Liste des velib disponible"
+        android:text="Liste des velibs disponible"
         android:textSize="25dp"
         android:layout_centerHorizontal="true"
         />
@@ -18,7 +18,7 @@
         android:id="@+id/listOfBike"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/labelBike"
+        android:layout_below="@+id/labelBike"
         />
 
 </RelativeLayout>
