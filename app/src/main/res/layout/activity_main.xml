@@ -16,6 +16,7 @@
         android:layout_centerHorizontal="true"
         />
     <ImageButton
+        android:id="@+id/refreshBtn"
         android:layout_marginTop="13dp"
         android:layout_marginRight="10dp"
         android:layout_width="20dp"
@@ -29,10 +30,12 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/labelBike"
         android:layout_marginLeft="10dp"
-        android:layout_marginBottom="5dp"
+        android:layout_marginBottom="10dp"
         android:textSize="10dp"
-        android:text="Dernière MàJ:"
+        android:text=""
         />
+
+
     <ListView
         android:id="@+id/listOfBike"
         android:layout_width="wrap_content"
