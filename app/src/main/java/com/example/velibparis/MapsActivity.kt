@@ -1,6 +1,7 @@
 package com.example.velibparis
 
 import android.content.pm.PackageManager
+import android.location.Location
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -12,7 +13,6 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
-import com.google.android.gms.maps.model.MarkerOptions
 
 
 
@@ -21,16 +21,35 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
    companion object{
        private const val LOCATION_PERMISSION_REQUEST_CODE = 1
    }
+    private lateinit var lastLocation: Location
     private fun setUpMap() {
         if (ActivityCompat.checkSelfPermission(this,
                 android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this,
                 arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION_REQUEST_CODE)
-            return
+
+          return
         }
+        // 1
+        map.isMyLocationEnabled = true
+
+// 2
+        fusedLocationClient.lastLocation.addOnSuccessListener(this) { location ->
+            // Got last known location. In some rare situations this can be null.
+            // 3
+            if (location != null) {
+                lastLocation = location
+                val currentLatLng = LatLng(location.latitude, location.longitude)
+                map.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 18f))
+            }
+
+        }
+
     }
     private lateinit var map: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_maps)
@@ -55,12 +74,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
 
-        // Add a marker in Sydney and move the camera
-        val paris = LatLng(48.866667, 2.333333)
-        map.addMarker(MarkerOptions().position(paris).title("My favorite City"))
-        map.moveCamera (CameraUpdateFactory.newLatLngZoom (paris, 19.0f ))
         map.uiSettings.isZoomControlsEnabled = true
         map.setOnMarkerClickListener(this)
+
         setUpMap()
     }
 
