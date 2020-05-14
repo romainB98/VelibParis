@@ -1,5 +1,6 @@
 package com.example.velibparis
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.JsonReader
 import android.util.Log
@@ -14,18 +15,27 @@ import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.HashMap
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 /* Code originale de Nils Vaede que j'ai retravaillé en long en large et en travers afin de comprendre et de faire mon propre code  */
 
 class MainActivity : AppCompatActivity() {
     val helper = MySQLiteHelper(this)
+    lateinit var btn : Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        //initialisation
+        btn = findViewById(R.id.btnMaps)
+
+        // creation de notre intent
+        val monIntent : Intent =  Intent(this,MapsActivity
+        ::class.java)
+
+        //clic sur le bouton
+        btn.setOnClickListener {
+            startActivity(monIntent)
+        }
 
         val listView = findViewById<ListView>(R.id.listOfBike)
         getLieux()
