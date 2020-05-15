@@ -15,7 +15,7 @@ import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.HashMap
-/* Code originale de Nils Vaede que j'ai retravaillé en long en large et en travers afin de comprendre et de faire mon propre code  */
+
 
 class MainActivity : AppCompatActivity() {
     val helper = MySQLiteHelper(this)
@@ -27,13 +27,10 @@ class MainActivity : AppCompatActivity() {
 
         //initialisation
         btn = findViewById(R.id.btnMaps)
-
-        // creation de notre intent
-        val monIntent : Intent =  Intent(this,MapsActivity
-        ::class.java)
-
-        //clic sur le bouton
+        val monIntent : Intent =  Intent(this,MapsActivity::class.java)
         btn.setOnClickListener {
+
+
             startActivity(monIntent)
         }
 
@@ -187,10 +184,12 @@ class MainActivity : AppCompatActivity() {
             if(lieu != null) {
                 vue.findViewById<TextView>(R.id.lieu).text = lieu.lieu
                 vue.findViewById<TextView>(R.id.nbVelib).text = lieu.nbVelib.toString()
+                vue.findViewById<TextView>(R.id.gps).text = lieu.gps["lat"].toString()
             }
 
             return vue
         }
+
     }
 
 

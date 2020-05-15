@@ -13,11 +13,48 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
-
+import com.google.android.gms.maps.model.MarkerOptions
 
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
     GoogleMap.OnMarkerClickListener {
+    val helper = MySQLiteHelper(this)
+
+    fun getBaseOnMap(){
+        runOnUiThread {
+
+            val result = helper.getAllStations()
+            if (result != null) {
+                result.moveToFirst()
+                while (result.moveToNext()) {
+                    //val stationId = result.getString(result.getColumnIndex("id"))
+                    val lieu = result.getString(result.getColumnIndex("name"))
+                    //val nbVelib = result.getString(result.getColumnIndex("nbr_bike")).toInt()
+                    val gps = result.getString(result.getColumnIndex("coordinates"))
+
+                    // convert string to HashMap
+                    val long = gps.split("{lon=")[1].split(",")[0]
+                    val lat = gps.split("lat=")[1].split("}")[0]
+
+                    val gpsHashMap = HashMap<String, Double>()
+                    gpsHashMap["lat"] = lat.toDouble()
+                    gpsHashMap["lon"] = long.toDouble()
+
+                    val myPlace = LatLng(lat.toDouble(), long.toDouble())  // this is New York
+                    print(myPlace)
+                    map.addMarker(MarkerOptions().position(myPlace).title(lieu))
+
+
+                }
+
+
+                result.close()
+            }
+        }
+
+
+    }
+
    companion object{
        private const val LOCATION_PERMISSION_REQUEST_CODE = 1
    }
@@ -77,7 +114,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
         map.uiSettings.isZoomControlsEnabled = true
         map.setOnMarkerClickListener(this)
 
+
+        getBaseOnMap()
         setUpMap()
+
     }
 
     override fun onMarkerClick(p0: Marker?): Boolean = false
