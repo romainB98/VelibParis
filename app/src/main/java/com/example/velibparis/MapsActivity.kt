@@ -114,13 +114,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
     private fun setUpMap() {
 
         map.isMyLocationEnabled = true
+
         fusedLocationClient.lastLocation.addOnSuccessListener(this) { location ->
             // Got last known location. In some rare situations this can be null.
             // 3
             if (location != null) {
                 lastLocation = location
                 val currentLatLng = LatLng(location.latitude, location.longitude)
-                getBaseOnMap(currentLatLng)
+
                 map.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 18f))
 
 
@@ -153,6 +154,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
                 super.onLocationResult(p0)
 
                 lastLocation = p0.lastLocation
+                getBaseOnMap(LatLng(lastLocation.latitude, lastLocation.longitude))
 
 
 
@@ -185,9 +187,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
                         // distance in meter
                         return results[0]
                     }
-                    val d = calculateDistance(lat.toDouble(), long.toDouble(), LatLng.latitude, LatLng.longitude)
+
+
+
                     map.addMarker(MarkerOptions().position(myPlace).title(
-                        "$lieu : $nbVelib disponibles").snippet("à $d mètres"))
+                        "$lieu : $nbVelib disponibles").snippet("à "+calculateDistance(lat.toDouble(), long.toDouble(), LatLng.latitude, LatLng.longitude)+" mètres"))
 
 
                 }
