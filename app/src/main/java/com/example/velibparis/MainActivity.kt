@@ -184,7 +184,7 @@ class MainActivity : AppCompatActivity() {
             if(lieu != null) {
                 vue.findViewById<TextView>(R.id.lieu).text = lieu.lieu
                 vue.findViewById<TextView>(R.id.nbVelib).text = lieu.nbVelib.toString()
-                vue.findViewById<TextView>(R.id.gps).text = lieu.gps["lat"].toString()
+
             }
 
             return vue
