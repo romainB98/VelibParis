@@ -17,6 +17,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import kotlin.math.round
 
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
@@ -188,10 +189,27 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
                         return results[0]
                     }
 
+                    var d = round(calculateDistance(lat.toDouble(), long.toDouble(), LatLng.latitude, LatLng.longitude))
+                    if(d >= 1000){
+                        val str = d.toString()
+                        val dist = str.substring(0,1)+" Km"
+                        map.addMarker(MarkerOptions().position(myPlace).title(
+                            "$lieu : $nbVelib disponibles")
+                            .snippet("à "+
+                                    dist))
+                    }
+                    else
+                    {
+                        val str = d.toString()
+                        val dist = str.split(".")[0]
+                        map.addMarker(MarkerOptions().position(myPlace).title(
+                            "$lieu : $nbVelib disponibles")
+                            .snippet("à "+
+                                    dist
+                                    +" mètres"))
+                    }
 
 
-                    map.addMarker(MarkerOptions().position(myPlace).title(
-                        "$lieu : $nbVelib disponibles").snippet("à "+calculateDistance(lat.toDouble(), long.toDouble(), LatLng.latitude, LatLng.longitude)+" mètres"))
 
 
                 }
